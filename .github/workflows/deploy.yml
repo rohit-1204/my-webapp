@@ -1,24 +1,30 @@
-name: Deploy HTML App to VM
+name: Deploy HTML App
 
 on:
   push:
     branches:
       - master
+      - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Setup SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.VM_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VM_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
 
-    - name: Deploy files to VM
-      run: |
-        rsync -avz --delete ./ ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:/var/www/html
+      - name: Test SSH
+        run: |
+          ssh -o StrictHostKeyChecking=yes ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} "whoami && hostname"
+
+      - name: Deploy HTML files
+        run: |
+          rsync -avz --delete ./ ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:/var/www/html
