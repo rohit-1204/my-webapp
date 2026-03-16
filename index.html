@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Messages for Her ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
+    <title>For My Piya ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@1,500;1,700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #ff4b72;
+            --primary-color: #ff3366;
             --bg-gradient: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
-            --card-bg: rgba(255, 255, 255, 0.92);
+            --card-bg: rgba(255, 255, 255, 0.85);
         }
 
         * {
@@ -27,68 +27,90 @@
             align-items: center;
             background: var(--bg-gradient);
             padding: 15px;
-            overflow: hidden;
+            overflow: hidden; /* Hide floating hearts overflow */
+            position: relative;
         }
 
-        /* App Container specifically tuned for Mobile */
+        /* Background Floating Hearts */
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 20px;
+            animation: floatUp linear infinite;
+            bottom: -50px;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(360deg) scale(1.5); opacity: 0; }
+        }
+
+        /* App Container */
         .app-container {
             background: var(--card-bg);
             width: 100%;
-            max-width: 420px; /* Mobile app width */
-            border-radius: 24px;
+            max-width: 420px;
+            border-radius: 30px;
             padding: 35px 25px;
-            box-shadow: 0 20px 40px rgba(255, 75, 114, 0.2), 
-                        inset 0 0 0 1px rgba(255,255,255,0.5);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px rgba(255, 51, 102, 0.3), 
+                        inset 0 0 0 2px rgba(255,255,255,0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             text-align: center;
             display: flex;
             flex-direction: column;
             gap: 20px;
+            z-index: 10;
+            position: relative;
         }
 
         .header h1 {
-            color: #333;
-            font-size: 24px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .heart {
+            font-family: 'Dancing Script', cursive;
             color: var(--primary-color);
-            display: inline-block;
-            animation: heartbeat 1.5s infinite;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .header p {
-            color: #777;
-            font-size: 13px;
-            margin-top: 5px;
+            color: #555;
+            font-size: 14px;
+            font-weight: 400;
         }
 
-        /* Horizontally scrollable categories for mobile */
+        /* Horizontally scrollable categories */
         .categories {
             display: flex;
             overflow-x: auto;
-            gap: 10px;
-            padding-bottom: 10px;
-            scrollbar-width: none; /* Firefox */
+            gap: 12px;
+            padding-bottom: 15px;
+            padding-top: 5px;
+            scrollbar-width: none;
         }
         
         .categories::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
+            display: none;
         }
 
         .cat-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 75, 114, 0.3);
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 51, 102, 0.4);
             color: var(--primary-color);
-            padding: 8px 18px;
-            border-radius: 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             white-space: nowrap;
             transition: all 0.3s ease;
@@ -98,39 +120,54 @@
             background: var(--primary-color);
             color: #fff;
             border-color: var(--primary-color);
-            box-shadow: 0 4px 10px rgba(255, 75, 114, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+        }
+
+        /* Special Propose Button */
+        .btn-propose {
+            border: 2px solid #ffd700;
+            color: #d4af37;
+            background: rgba(255, 215, 0, 0.1);
+            animation: pulseGlow 2s infinite;
+        }
+
+        .btn-propose.active {
+            background: linear-gradient(45deg, #ffd700, #ffaa00);
+            color: #fff;
+            border: none;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.6);
+            animation: none;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
         }
 
         /* The Message Card */
         .message-box {
             background: #ffffff;
-            padding: 30px 20px;
-            border-radius: 16px;
-            min-height: 180px;
+            padding: 35px 25px;
+            border-radius: 20px;
+            min-height: 190px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px dashed rgba(255, 75, 114, 0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px dashed rgba(255, 51, 102, 0.3);
             position: relative;
-        }
-
-        .quote-icon {
-            font-size: 24px;
-            color: rgba(255, 75, 114, 0.2);
-            position: absolute;
-            top: 15px;
-            left: 20px;
+            overflow: hidden;
         }
 
         .message-text {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: 20px;
+            font-size: 21px;
             color: #2c2c2c;
             line-height: 1.6;
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 2;
         }
 
@@ -139,32 +176,32 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
         .btn {
-            padding: 14px;
+            padding: 15px;
             border: none;
-            border-radius: 14px;
-            font-size: 14px;
+            border-radius: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.1s, opacity 0.3s;
+            transition: transform 0.1s, background 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .btn:active {
-            transform: scale(0.96);
+            transform: scale(0.95);
         }
 
         .btn-generate {
             grid-column: span 2;
             background: var(--primary-color);
             color: white;
-            box-shadow: 0 6px 15px rgba(255, 75, 114, 0.3);
+            box-shadow: 0 8px 20px rgba(255, 51, 102, 0.3);
         }
 
         .btn-copy {
@@ -175,97 +212,110 @@
         .btn-whatsapp {
             background: #25D366;
             color: white;
-        }
-
-        /* Animations */
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            14% { transform: scale(1.15); }
-            28% { transform: scale(1); }
-            42% { transform: scale(1.15); }
-            70% { transform: scale(1); }
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
 
         /* Responsive Tweaks */
         @media (max-width: 380px) {
-            .message-text { font-size: 18px; }
-            .btn { font-size: 13px; padding: 12px; }
-            .header h1 { font-size: 22px; }
+            .message-text { font-size: 19px; }
+            .btn { font-size: 14px; padding: 13px; }
+            .header h1 { font-size: 36px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Background Hearts Animation Container -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
     <div class="app-container">
         <div class="header">
-            <h1>Notes for Her <span class="heart">❤️</span></h1>
-            <p>Because she deserves to smile today.</p>
+            <h1>For Piya ❤️</h1>
+            <p>Words for the girl who owns my heart.</p>
         </div>
 
-        <!-- Scrollable on mobile -->
+        <!-- Scrollable Categories -->
         <div class="categories">
             <button class="cat-btn active" onclick="setCategory('romantic', this)">Deep Love</button>
             <button class="cat-btn" onclick="setCategory('morning', this)">Morning</button>
+            <button class="cat-btn btn-propose" onclick="setCategory('propose', this)">Propose 💍</button>
             <button class="cat-btn" onclick="setCategory('flirty', this)">Flirty</button>
-            <button class="cat-btn" onclick="setCategory('cheerup', this)">Cheer Her Up</button>
             <button class="cat-btn" onclick="setCategory('night', this)">Goodnight</button>
         </div>
 
         <div class="message-box">
-            <div class="quote-icon">❝</div>
-            <div class="message-text" id="wishDisplay">Loading love...</div>
+            <div class="message-text" id="wishDisplay">Loading love for Piya...</div>
         </div>
 
         <div class="controls">
-            <button class="btn btn-generate" onclick="generateWish()">✨ Tap for a new message</button>
+            <button class="btn btn-generate" onclick="generateWish()">✨ New Message for Piya</button>
             <button class="btn btn-copy" id="copyBtn" onclick="copyWish()">📋 Copy</button>
             <button class="btn btn-whatsapp" onclick="sendWhatsApp()">💬 Send to WA</button>
         </div>
     </div>
 
     <script>
-        // Database of romantic messages
+        // Create Floating Hearts in Background
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const hearts = ['❤️', '💖', '✨', '💕'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's'; // 4 to 7 seconds
+                heart.style.fontSize = (Math.random() * 15 + 15) + 'px'; // 15px to 30px
+                
+                container.appendChild(heart);
+                
+                // Remove heart after it floats up
+                setTimeout(() => {
+                    heart.remove();
+                }, 7000);
+            }, 400); // New heart every 400ms
+        }
+        createHearts();
+
+        // Database of personalized messages for Piya
         const messages = {
             romantic: [
-                "I didn't know what love was until I met you. You are my everything.",
-                "You are the best thing that’s ever happened to me, and I’m never letting you go.",
-                "I look at you and see the rest of my life in front of my eyes.",
-                "Thank you for being the reason I smile every single day.",
-                "No matter how much time I spend with you, I can never ever get enough of you.",
-                "You are my today and all of my tomorrows.",
-                "I fall in love with you just a little bit more every day."
+                "Piya, I didn't know what true love was until you walked into my life. You are my everything.",
+                "Every time I hear the name 'Piya', my heart skips a beat. I love you so much.",
+                "You are the best thing that’s ever happened to me, Piya. I’m never letting you go.",
+                "Piya, look at the stars tonight. None of them shine as bright as you do in my life.",
+                "No matter how much time I spend with you, Piya, it's never enough. I crave your presence.",
+                "Piya, you are my today, my tomorrow, and my forever."
             ],
             morning: [
-                "Good morning, gorgeous. Waking up knowing you are mine is the best feeling in the world.",
-                "The sun is up, the sky is blue, today is beautiful, and so are you. Good morning! ☀️",
-                "I hope your morning is as bright and beautiful as your smile.",
-                "Just wanted to be the first reason you smile today. Good morning, my love.",
-                "Morning babe! I was dreaming of you all night.",
-                "Good morning to the woman who makes my heart skip a beat."
+                "Good morning, my beautiful Piya. Waking up knowing you are mine is the greatest feeling.",
+                "The sun is up, but my world doesn't light up until I see your smile, Piya. Good morning! ☀️",
+                "Just wanted to be the first reason you smile today. Good morning, Piya.",
+                "Morning my sweet Piya! I was dreaming about you all night long.",
+                "Rise and shine, Piya! I hope your day is as perfect and beautiful as you are."
+            ],
+            propose: [
+                "Piya, from the exact moment I met you, my soul knew it had found its home. Will you be mine forever? 💍",
+                "I want to wake up next to you for the rest of my life. Piya, I love you endlessly. Will you marry me? ❤️",
+                "Piya, you made my life a beautiful fairytale. I want to write the rest of the chapters with you. Will you be my wife?",
+                "They say you only fall in love once, but Piya, every time I look at you, I fall all over again. Be mine for eternity? 💍",
+                "Piya, holding your hand makes me feel like I can conquer the world. I want to hold it forever. Will you marry me?",
+                "I don't just want you for a season, Piya. I want you for every single day of my life. Will you say yes? 💍"
             ],
             flirty: [
-                "Are you a magician? Because whenever I look at you, everyone else disappears. 😏",
-                "I can't concentrate today, I'm too busy thinking about how gorgeous you are.",
-                "You look so beautiful right now. I can't even see you, but I just know it.",
-                "I was going to say something sweet, but honestly, I just really want to kiss you right now.",
-                "Do you have a map? I keep getting lost in your eyes.",
-                "Stop making me think about you! I'm busy. (Just kidding, please continue)."
-            ],
-            cheerup: [
-                "I know today is hard, but I’m right here with you. I believe in you so much. ❤️",
-                "Take a deep breath, my love. You are stronger than you think, and I've got your back.",
-                "Just a reminder: You are brilliant, you are beautiful, and I am so incredibly proud of you.",
-                "Whenever you feel overwhelmed, just remember how much I love you.",
-                "Sending you the biggest, tightest hug right now. You've got this.",
-                "I wish I could take your stress away. Let me pamper you later? 🌹"
+                "Piya, are you a magician? Because whenever I look at you, everyone else disappears. 😏",
+                "I can't concentrate today, Piya. I'm too busy thinking about how stunning you are.",
+                "Piya, stop making me think about you! I'm busy... (Just kidding, please never stop).",
+                "I was going to say something sweet, but honestly Piya, I just really want to kiss you right now.",
+                "Do you have a map, Piya? Because I get lost in your eyes every single time."
             ],
             night: [
-                "Sleep well, my angel. I'll be dreaming of you tonight.",
-                "I wish I was falling asleep in your arms right now. Goodnight, beautiful.",
-                "Close your eyes and rest, my love. I love you to the moon and back.",
-                "The hardest part of the day is going to sleep without you next to me. Goodnight! ✨",
-                "Sending you sweet kisses before you sleep. Have the most beautiful dreams.",
-                "Goodnight to the girl who stole my heart and keeps it safe."
+                "Sleep well, my sweet Piya. I'll be holding you in my dreams tonight.",
+                "I wish I was falling asleep in your arms right now. Goodnight, my beautiful Piya.",
+                "Close your eyes and rest, Piya. Remember that I love you to the moon and back.",
+                "The hardest part of the day is going to sleep without you next to me. Goodnight, Piya! ✨",
+                "Sending you warm hugs and soft kisses before you sleep. Sweet dreams, Piya."
             ]
         };
 
@@ -287,7 +337,7 @@
             generateWish();
         }
 
-        // Function to generate a random wish
+        // Function to generate a random wish with smooth animation
         function generateWish() {
             const categoryArray = messages[currentCategory];
             let newWish = currentWish;
@@ -300,16 +350,17 @@
             
             currentWish = newWish;
             
-            // Fade and slight scale effect for elegance
+            // Smooth text animation (fade out and slide down)
             const wishElement = document.getElementById('wishDisplay');
             wishElement.style.opacity = 0;
-            wishElement.style.transform = 'translateY(10px)';
+            wishElement.style.transform = 'translateY(15px) scale(0.98)';
             
             setTimeout(() => {
-                wishElement.innerText = currentWish;
+                wishElement.innerText = `"${currentWish}"`;
+                // Fade in and slide up
                 wishElement.style.opacity = 1;
-                wishElement.style.transform = 'translateY(0)';
-            }, 300); 
+                wishElement.style.transform = 'translateY(0) scale(1)';
+            }, 350); 
         }
 
         // Function to copy text
@@ -332,14 +383,15 @@
 
         // Send directly to WhatsApp
         function sendWhatsApp() {
-            // Check if on mobile or desktop to open appropriate WA link
             const text = encodeURIComponent(currentWish);
             const whatsappUrl = `https://api.whatsapp.com/send?text=${text}`;
             window.open(whatsappUrl, '_blank');
         }
 
         // Initialize with a random wish on load
-        window.onload = generateWish;
+        window.onload = () => {
+            setTimeout(generateWish, 200); // Slight delay on load looks better
+        };
     </script>
 
 </body>
