@@ -9,7 +9,7 @@
         :root {
             --primary-color: #ff3366;
             --bg-gradient: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.92);
         }
 
         * {
@@ -69,7 +69,7 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 25px;
             z-index: 10;
             position: relative;
             overflow: hidden;
@@ -85,15 +85,15 @@
         }
 
         .header p {
-            color: #666;
+            color: #555;
             font-size: 14px;
             font-weight: 400;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         /* The Message Card */
         .message-box {
-            min-height: 220px;
+            min-height: 230px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -104,7 +104,7 @@
         .message-text {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: 24px;
+            font-size: 23px;
             color: #2c2c2c;
             line-height: 1.6;
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -118,7 +118,7 @@
             background: rgba(255, 51, 102, 0.1);
             border-radius: 10px;
             overflow: hidden;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .progress-bar {
@@ -144,7 +144,7 @@
     <div class="app-container">
         <div class="header">
             <h1>For Piya ❤️</h1>
-            <p>READ THIS CAREFULLY...</p>
+            <p>Words for the girl who owns my heart.</p>
         </div>
 
         <div class="message-box">
@@ -181,15 +181,15 @@
         }
         createHearts();
 
-        // Database of pure proposal messages for Piya
-        const proposeMessages = [
-            "Piya, from the exact moment I met you, my soul knew it had found its home. Will you be mine forever? 💍",
-            "I want to wake up next to you for the rest of my entire life. Piya, I love you endlessly. Will you marry me? ❤️",
-            "Piya, you made my life a beautiful fairytale. I want to write the rest of the chapters with you. Will you be my wife?",
-            "Every time I look into your beautiful eyes, I see my future. Piya, will you make me the happiest man alive? 💍",
-            "Holding your hand makes me feel like I can conquer the world. I want to hold it forever, Piya. Marry me?",
-            "I don't just want you for a season, Piya. I want you for every single day of my life. Will you say yes? 💍",
-            "Piya, my love for you grows stronger with every passing second. Be my forever? ❤️"
+        // Database of messages thanking her for accepting the proposal
+        const loveMessages = [
+            "Piya, thank you for coming into my life. You turned my ordinary world into a beautiful fairytale.",
+            "My heart is so full knowing you said yes! Thank you for accepting my proposal, my beautiful Piya. 💍",
+            "I promise to make you the happiest girl in the world. Thank you for trusting me and being mine forever. ❤️",
+            "Having you by my side is my greatest blessing. Thank you for choosing me, Piya. I will love you for eternity.",
+            "The exact moment you accepted my love, my life became complete. Thank you for walking into my life and staying. 🌹",
+            "Every day I wake up and smile because I get to call you mine. Thank you for making my dreams come true, Piya. ✨",
+            "I didn't just find a partner, I found my soulmate. Thank you for saying 'Yes' to our forever, Piya. 💍"
         ];
 
         let currentIndex = 0;
@@ -210,7 +210,7 @@
 
             setTimeout(() => {
                 // 3. Change text while invisible
-                wishElement.innerText = `"${proposeMessages[currentIndex]}"`;
+                wishElement.innerText = `"${loveMessages[currentIndex]}"`;
                 
                 // 4. Fade in new text
                 wishElement.style.opacity = 1;
@@ -223,7 +223,7 @@
                 }, 50);
 
                 // 6. Move to next index for the next cycle
-                currentIndex = (currentIndex + 1) % proposeMessages.length;
+                currentIndex = (currentIndex + 1) % loveMessages.length;
 
             }, 600); // Wait 600ms for the fade-out animation to finish before swapping text
         }
