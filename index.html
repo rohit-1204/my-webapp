@@ -1,1 +1,254 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Wishes & Greetings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            padding: 20px;
+        }
+
+        .app-container {
+            background: rgba(255, 255, 255, 0.95);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .cat-btn {
+            background: transparent;
+            border: 2px solid #a18cd1;
+            color: #a18cd1;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cat-btn:hover, .cat-btn.active {
+            background: #a18cd1;
+            color: #fff;
+        }
+
+        .wish-box {
+            background: #f9f9f9;
+            padding: 30px 20px;
+            border-radius: 15px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-left: 5px solid #fbc2eb;
+        }
+
+        .wish-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: #444;
+            line-height: 1.5;
+            transition: opacity 0.4s ease;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            color: white;
+            flex: 2;
+        }
+
+        .btn-copy {
+            background: #f0f0f0;
+            color: #333;
+            flex: 1;
+        }
+
+        .btn-copy:hover {
+            background: #e4e4e4;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <h1>✨ Daily Wishes</h1>
+        <p class="subtitle">Spread positivity with the perfect words.</p>
+
+        <div class="categories">
+            <button class="cat-btn active" onclick="setCategory('general', this)">Everyday</button>
+            <button class="cat-btn" onclick="setCategory('morning', this)">Morning</button>
+            <button class="cat-btn" onclick="setCategory('birthday', this)">Birthday</button>
+            <button class="cat-btn" onclick="setCategory('success', this)">Success</button>
+        </div>
+
+        <div class="wish-box">
+            <div class="wish-text" id="wishDisplay">"May your day be as wonderful as you are."</div>
+        </div>
+
+        <div class="controls">
+            <button class="action-btn btn-generate" onclick="generateWish()">🪄 New Wish</button>
+            <button class="action-btn btn-copy" id="copyBtn" onclick="copyWish()">📋 Copy</button>
+        </div>
+    </div>
+
+    <script>
+        // Database of wishes
+        const wishes = {
+            general: [
+                "May your day be as wonderful as you are.",
+                "Sending you good vibes and positive energy today!",
+                "Keep shining, the world needs your light.",
+                "Wishing you peace, love, and endless joy.",
+                "May you find reasons to smile in every little thing today.",
+                "I hope something beautiful happens to you today."
+            ],
+            morning: [
+                "Rise and shine! Make today amazing.",
+                "Good morning! May your coffee be strong and your day be sweet.",
+                "Sending you a warm hug to start your morning right.",
+                "Every morning is a blank canvas. Paint something beautiful today!",
+                "Wake up with determination, go to bed with satisfaction.",
+                "Good morning! Wishing you a day full of sunny smiles and happy thoughts."
+            ],
+            birthday: [
+                "Wishing you a day filled with happiness and a year filled with joy.",
+                "May all your dreams turn into reality. Happy Birthday!",
+                "Count your life by smiles, not tears. Have a wonderful birthday!",
+                "Here is to another year of growing, learning, and finding joy.",
+                "May your special day be wrapped in love and filled with wonderful surprises.",
+                "Happy Birthday! May your cake be sweet, but your year be sweeter."
+            ],
+            success: [
+                "Believe in yourself, and the rest will fall into place.",
+                "May your hard work lead you to great triumphs.",
+                "Dream big, work hard, and make it happen. I believe in you!",
+                "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+                "Wishing you clarity of mind and strength of spirit to achieve your goals.",
+                "May every step you take bring you closer to your grandest dreams."
+            ]
+        };
+
+        let currentCategory = 'general';
+        let currentWish = wishes.general[0];
+
+        // Function to change category
+        function setCategory(category, element) {
+            currentCategory = category;
+            
+            // Update active button styling
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            // Generate a new wish for the new category
+            generateWish();
+        }
+
+        // Function to generate a random wish
+        function generateWish() {
+            const categoryArray = wishes[currentCategory];
+            let newWish = currentWish;
+            
+            // Ensure we don't show the exact same wish twice in a row
+            while (newWish === currentWish) {
+                const randomIndex = Math.floor(Math.random() * categoryArray.length);
+                newWish = categoryArray[randomIndex];
+            }
+            
+            currentWish = newWish;
+            
+            // Fade effect
+            const wishElement = document.getElementById('wishDisplay');
+            wishElement.style.opacity = 0;
+            
+            setTimeout(() => {
+                wishElement.innerText = `"${currentWish}"`;
+                wishElement.style.opacity = 1;
+            }, 400); // Wait for fade out before changing text
+        }
+
+        // Function to copy text to clipboard
+        function copyWish() {
+            navigator.clipboard.writeText(currentWish).then(() => {
+                const copyBtn = document.getElementById('copyBtn');
+                copyBtn.innerHTML = "✅ Copied!";
+                copyBtn.style.background = "#d4edda";
+                copyBtn.style.color = "#155724";
+
+                // Reset button after 2 seconds
+                setTimeout(() => {
+                    copyBtn.innerHTML = "📋 Copy";
+                    copyBtn.style.background = "#f0f0f0";
+                    copyBtn.style.color = "#333";
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+
+        // Initialize with a random wish on load
+        window.onload = generateWish;
+    </script>
+
+</body>
+</html>
