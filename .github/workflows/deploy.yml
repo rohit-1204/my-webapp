@@ -26,5 +26,10 @@ jobs:
           ssh -o StrictHostKeyChecking=yes ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} "whoami && hostname"
 
       - name: Deploy HTML files
-        run: |
-          rsync -avz --delete ./ ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:/var/www/html
+        run: |  
+          rsync -avz --delete \
+            --exclude ".git/" \
+            --exclude ".github/" \
+            -e "ssh -i ~/.ssh/id_rsa" \
+            ./ ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:/usr/share/nginx/html
+    
